@@ -1,0 +1,38 @@
+include: package:very_good_analysis/analysis_options.yaml
+
+analyzer:
+  strong-mode:
+    implicit-casts: true
+    implicit-dynamic: true
+  language:
+    strict-casts: false
+    strict-raw-types: false
+  errors:
+    missing_required_param: error
+    prefer_const_declarations: warning
+    prefer_const_constructors: warning
+    public_member_api_docs: ignore
+    inference_failure_on_function_invocation: ignore
+  exclude:
+    - "lib/**/*.g.dart"
+
+linter:
+  rules:
+    omit_local_variable_types: false
+    prefer_const_declarations: true
+    prefer_const_constructors: true
+    public_member_api_docs: false
+    use_key_in_widget_constructors: true
+    avoid_print: true
+    prefer_single_quotes: true
+    avoid_redundant_argument_values: true
+    unnecessary_parenthesis: true
+    prefer_final_locals: true
+    avoid_dynamic_calls: false
+    no_leading_underscores_for_local_identifiers: false
+    sort_constructors_first: true
+    sort_pub_dependencies: false
+    lines_longer_than_80_chars: false
+    flutter_style_todos: false
+errors:
+  todo: ignore
