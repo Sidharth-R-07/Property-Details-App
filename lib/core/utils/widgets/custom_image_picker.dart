@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:appwrite/appwrite.dart';
 import 'package:flutter/material.dart';
 import 'package:property/core/constants/global.dart';
@@ -10,6 +8,7 @@ class CustomImagePicker extends StatefulWidget {
   const CustomImagePicker({required this.onImageSelected, super.key});
 
   /// Returns the uploaded image URL (null if failed/cancelled)
+  // ignore: inference_failure_on_function_return_type
   final Function(String?) onImageSelected;
 
   @override
@@ -23,11 +22,6 @@ class _CustomImagePickerState extends State<CustomImagePicker> {
   /// Setup Appwrite
   final Client client = Client();
   late final Storage storage;
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   Future<void> _pickAndUploadImage() async {
     try {
@@ -46,7 +40,7 @@ class _CustomImagePickerState extends State<CustomImagePicker> {
       debugPrint('❌ Image upload failed: $e');
       showToast('Image upload failed. Please try again.');
       widget.onImageSelected(null);
-    } finally {}
+    }
   }
 
   @override

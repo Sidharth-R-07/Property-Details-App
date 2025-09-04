@@ -48,6 +48,7 @@ class PropertyBloc extends Bloc<PropertyEvent, PropertyState> {
     emit(state.copyWith(fetchLoading: true));
     final res = await repository.getProperties();
     res.fold((l) => null, (r) {
+      debugPrint('Fetched ${r.length} properties.');
       emit(state.copyWith(properties: r));
     });
     emit(state.copyWith(fetchLoading: false));

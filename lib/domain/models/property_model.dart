@@ -1,8 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
-import 'package:flutter/widgets.dart';
-
 class PropertyModel {
   PropertyModel({
     required this.title,
@@ -32,8 +30,8 @@ class PropertyModel {
   }
 
   factory PropertyModel.fromMap(Map<String, dynamic> map) {
-    debugPrint('Mapping PropertyModel from map: $map');
     return PropertyModel(
+      id: map['id'] != null ? map['id'] as String : null,
       title: map['title'] as String,
       description: map['description'] as String,
       location: map['location'] as String,
