@@ -13,12 +13,10 @@ class PropertyRepositoryImpl implements PropertyRepository {
   @override
   FutureResult<PropertyModel> addProperty(PropertyModel propertyData) async {
     try {
-      final docRef = firestore.collection('properties').doc(propertyData.id);
-      propertyData.copyWith(id: docRef.id);
-      await docRef.set(propertyData.toMap());
-      final addedProperty = propertyData.copyWith(id: docRef.id);
-      
-      return Right(addedProperty);
+      final docRef = firestore.collection('properties').doc();
+      final propertyWithId = propertyData.copyWith(id: docRef.id);
+      await docRef.set(propertyWithId.toMap());
+      return Right(propertyWithId);
     } catch (e) {
       return Left(MainFailure(message: e.toString()));
     }

@@ -10,6 +10,7 @@ class PropertyCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint('Rendering PropertyCard for: ${property.id}');
     return Card(
       elevation: 4,
       margin: const EdgeInsets.all(12),
@@ -85,7 +86,7 @@ class PropertyCard extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '\$${property.price.toStringAsFixed(2)}',
+                      '₹${property.price.toStringAsFixed(2)}',
                       style: const TextStyle(
                         fontSize: 16,
                         color: Colors.green,
