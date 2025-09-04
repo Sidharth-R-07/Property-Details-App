@@ -2,6 +2,6 @@ part of '../di.dart';
 
 void configureBlocDependencies() {
   getIt.registerSingleton(
-    PropertyBloc(),
+    PropertyBloc(getIt<PropertyRepository>(), getIt<ShareService>()),
   );
 }
