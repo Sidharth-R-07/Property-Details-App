@@ -1,7 +1,7 @@
 part of 'app_theme.dart';
 
 class AppColors {
-  final Color primary = const Color(0xFF0D47A1);
+  final Color primary = const Color(0xFF09a372);
   final Color secondary = const Color(0xFF42A5F5);
   final Color text = const Color(0xFF000000);
   final Color accent = const Color(0xFFFFD600);
