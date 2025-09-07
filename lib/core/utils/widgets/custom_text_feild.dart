@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:property/core/utils/theme/app_theme.dart';
 
 class CustomTextField extends StatelessWidget {
   const CustomTextField({
@@ -22,9 +23,11 @@ class CustomTextField extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: TextFormField(
+        cursorColor: context.appColors.primary,
         controller: controller,
         keyboardType: keyboardType,
         maxLines: maxLines,
+        textInputAction: TextInputAction.next,
         validator: (value) {
           if (isRequired && (value == null || value.trim().isEmpty)) {
             return '$label is required';
@@ -34,10 +37,17 @@ class CustomTextField extends StatelessWidget {
         decoration: InputDecoration(
           labelText: label,
           hintText: hint,
+          labelStyle: TextStyle(color: Colors.grey.shade600, fontSize: 14),
+          hintStyle: TextStyle(color: Colors.grey.shade400, fontSize: 14),
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide(color: Colors.grey.shade300),
+          ),
+
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
-            borderSide: const BorderSide(color: Colors.blue, width: 2),
+            borderSide: BorderSide(color: Colors.grey.shade400),
           ),
           contentPadding: const EdgeInsets.symmetric(
             horizontal: 16,

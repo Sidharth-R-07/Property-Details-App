@@ -27,6 +27,7 @@ class PropertyListScreen extends StatelessWidget {
         }
       },
       child: Scaffold(
+        backgroundColor: context.appColors.background,
         appBar: AppBar(
           surfaceTintColor: context.appColors.primary,
           backgroundColor: context.appColors.primary,

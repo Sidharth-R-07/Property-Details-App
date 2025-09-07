@@ -1,4 +1,5 @@
 import 'package:appwrite/appwrite.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:property/core/constants/global.dart';
 import 'package:property/core/utils/service/custom_toast.dart';
@@ -50,20 +51,26 @@ class _CustomImagePickerState extends State<CustomImagePicker> {
       child: Container(
         height: 180,
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey.shade400),
+          border: Border.all(color: Colors.grey.shade300),
           borderRadius: BorderRadius.circular(12),
-          color: Colors.grey.shade100,
         ),
         child: _isUploading
-            ? const Center(child: CircularProgressIndicator())
+            ? const Center(child: CupertinoActivityIndicator())
             : _selectedImage == null
-            ? const Center(
+            ? Center(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(Icons.add_a_photo, size: 40, color: Colors.grey),
-                    SizedBox(height: 8),
-                    Text('Tap to upload image'),
+                    Icon(
+                      Icons.add_a_photo,
+                      size: 40,
+                      color: Colors.grey.shade400,
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      'Tap to upload image',
+                      style: TextStyle(color: Colors.grey.shade400),
+                    ),
                   ],
                 ),
               )

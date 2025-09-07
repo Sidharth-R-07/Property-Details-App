@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:property/core/utils/service/bottom_sheet_loading.dart';
 import 'package:property/core/utils/service/custom_toast.dart';
+import 'package:property/core/utils/theme/app_theme.dart';
 import 'package:property/core/utils/widgets/custom_image_picker.dart';
 import 'package:property/core/utils/widgets/custom_text_feild.dart';
 import 'package:property/domain/models/property_model.dart';
@@ -34,67 +36,108 @@ class _PropertyAddScreenState extends State<PropertyAddScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        titleSpacing: 0,
-        title: const Text('Add New Property', style: TextStyle(fontSize: 16)),
-      ),
-      body: BlocBuilder<PropertyBloc, PropertyState>(
-        builder: (context, state) {
-          return Form(
-            key: _formKey,
-            child: ListView(
-              padding: const EdgeInsets.all(16),
-              children: [
-                CustomTextField(
-                  controller: titleController,
-                  label: 'Title',
-                  hint: 'Enter property title',
-                  isRequired: true,
-                ),
-                CustomTextField(
-                  controller: descriptionController,
-                  label: 'Description',
-                  hint: 'Enter property description',
-
-                  maxLines: 3,
-                  isRequired: true,
-                ),
-                CustomTextField(
-                  controller: locationController,
-                  label: 'Location',
-                  hint: 'Enter property location',
-                  isRequired: true,
-                ),
-                CustomTextField(
-                  controller: priceController,
-                  label: 'Price',
-                  hint: 'Enter property price',
-                  keyboardType: TextInputType.number,
-                  isRequired: true,
-                ),
-                CustomImagePicker(
-                  onImageSelected: (file) {
-                    imageUrl = file;
-                  },
-                ),
-                const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: _submit,
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 14),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  child: state.submitLoading
-                      ? const CupertinoActivityIndicator()
-                      : const Text('Save Property'),
-                ),
-              ],
+    return BlocListener<PropertyBloc, PropertyState>(
+      listenWhen: (previous, current) =>
+          previous.submitLoading != current.submitLoading,
+      listener: (context, state) {
+        if (state.submitLoading) {
+          showLoadingBottomSheet(context);
+        } else {
+          if (Navigator.canPop(context)) {
+            Navigator.pop(context);
+          }
+        }
+      },
+      child: Scaffold(
+        backgroundColor: context.appColors.background,
+        appBar: AppBar(
+          leading: IconButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            icon: const Icon(
+              Icons.arrow_back_ios_new_rounded,
+              color: Colors.white,
             ),
-          );
-        },
+          ),
+          titleSpacing: 0,
+          backgroundColor: context.appColors.primary,
+          surfaceTintColor: context.appColors.primary,
+          title: const Text(
+            'Create New Property',
+            style: TextStyle(fontSize: 18, color: Colors.white),
+          ),
+        ),
+        body: BlocBuilder<PropertyBloc, PropertyState>(
+          builder: (context, state) {
+            return Form(
+              key: _formKey,
+              child: ListView(
+                padding: const EdgeInsets.all(16),
+                children: [
+                  CustomTextField(
+                    controller: titleController,
+                    label: 'Title',
+                    hint: 'Enter property title',
+                    isRequired: true,
+                  ),
+                  CustomTextField(
+                    controller: descriptionController,
+                    label: 'Description',
+                    hint: 'Enter property description',
+
+                    maxLines: 3,
+                    isRequired: true,
+                  ),
+                  CustomTextField(
+                    controller: locationController,
+                    label: 'Location',
+                    hint: 'Enter property location',
+                    isRequired: true,
+                  ),
+                  CustomTextField(
+                    controller: priceController,
+                    label: 'Price',
+                    hint: 'Enter property price',
+                    keyboardType: TextInputType.number,
+                    isRequired: true,
+                  ),
+                  const SizedBox(height: 6),
+                  CustomImagePicker(
+                    onImageSelected: (file) {
+                      imageUrl = file;
+                    },
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
+        bottomSheet: BottomSheet(
+          backgroundColor: Colors.transparent,
+          onClosing: () {},
+          builder: (context) => Container(
+            padding: const EdgeInsets.all(12),
+            width: double.infinity,
+            color: context.appColors.background,
+            child: MaterialButton(
+              color: context.appColors.primary,
+              padding: const EdgeInsets.symmetric(vertical: 12),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              onPressed: _submit,
+              child: const Text(
+                'Submit',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
